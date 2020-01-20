@@ -4,24 +4,25 @@ $(() => {
     let ag = afterglow.getPlayer('myvideo');
     let hashid = 0;
     let socket = io();
+    const video = document.getElementById('myvideo');
+
 
     test.click(() => {
-        ag.pause();
+
+        ag.currentTime(20);
+        console.log(ag)
     });
     button.click(() => { //Set the current page as the leader
         hashid = 1;
         console.log(hashid);
     });
 
-    afterglow.on('myvideo', 'ready', function(event) {
+    afterglow.on('myvideo', 'ready', function (event) {
         ag.play();
         setTimeout(() => {
             ag.pause();
         }, 1000);
-    });
 
-    $('#myvideo').bind('timeupdate', function(){
-        console.log('the time was updated to: ' + this.currentTime);
     });
 
     afterglow.on('myvideo', 'play', (event) => {
@@ -33,7 +34,18 @@ $(() => {
     afterglow.on('myvideo', 'paused', (event) => {
         if (hashid === 1) {
             socket.emit('pause')
+        }
+    });
 
+    afterglow.on('myvideo', 'fullscreen-entered', (event) => {
+        if (hashid === 1) {
+            socket.emit('enter')
+        }
+    });
+
+    afterglow.on('myvideo', 'fullscreen-left', (event) => {
+        if (hashid === 1) {
+            socket.emit('left')
         }
     });
 
@@ -44,6 +56,14 @@ $(() => {
 
     socket.on('pause', () => {
         ag.pause();
+    });
+
+    socket.on('enter', () => {
+        ag.requestFullscreen();
+    });
+
+    socket.on('pause', () => {
+        ag.exitFullscreen();
     });
 
     socket.on('hash', msg => {

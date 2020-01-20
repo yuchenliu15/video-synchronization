@@ -21,10 +21,15 @@ io.on("connection", (socket) => {
     socket.on('pause', () => {
         socket.broadcast.emit('pause');
     });
+    socket.on('enter', () => {
+        socket.broadcast.emit('enter');
+    });
+    socket.on('left', () => {
+        socket.broadcast.emit('left');
+    });
 
 });
 
 http.listen(3000, () => {
     console.log('listening on 3000');
-    console.log('jj')
 });
