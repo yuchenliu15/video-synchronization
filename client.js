@@ -6,7 +6,6 @@ $(() => {
     let socket = io();
     const video = document.getElementById('myvideo');
 
-
     test.click(() => {
 
         ag.currentTime(20);
@@ -25,7 +24,19 @@ $(() => {
 
     });
 
+    video.addEventListener('timeupdate', function () {
+        const time = ag.currentTime();
+        if (hashid === 1)
+            socket.emit('time', time);
+    });
+
+
+    let isTimeUpdateActivated = 0;
     afterglow.on('myvideo', 'play', (event) => {
+        if (isTimeUpdateActivated === 0) {
+            video.currentTime = ag.currentTime();
+            isTimeUpdateActivated = 1;
+        }
         if (hashid === 1) {
             socket.emit('play');
         }
@@ -64,6 +75,15 @@ $(() => {
 
     socket.on('pause', () => {
         ag.exitFullscreen();
+    });
+
+    socket.on('time', (time) => {
+        console.log('received' + time)
+        const timeDiff = Math.abs(ag.currentTime() - time);
+        console.log(timeDiff);
+        if(timeDiff > 1){
+            video.currentTime = time;
+        }
     });
 
     socket.on('hash', msg => {

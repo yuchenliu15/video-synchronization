@@ -27,7 +27,9 @@ io.on("connection", (socket) => {
     socket.on('left', () => {
         socket.broadcast.emit('left');
     });
-
+    socket.on('time', (msg) => {
+        socket.broadcast.emit('time',msg);
+    });
 });
 
 http.listen(3000, () => {
