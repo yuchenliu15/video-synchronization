@@ -1,0 +1,15 @@
+{
+  "name": "afterglow_project",
+  "version": "1.0.0",
+  "description": "Using Afterglow video player and socket to sync Vimeo, Youtube and HTML videos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuchen Liu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.3.0"
+  }
+}

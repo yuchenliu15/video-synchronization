@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Video player</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+<!--     <script src="//cdn.jsdelivr.net/npm/afterglowplayer@1.x"></script>
+ -->    <script src="https://cdn.jsdelivr.net/gh/moay/afterglow@2d35f1ba15c8271d98ed3390c348b28284222045/dist/afterglow.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+
+</head>
+
+<body>
+
+    <video class="afterglow" id="myvideo" width="1280" height="720" data-youtube-id="ATSgwZXOuUo"
+        ></video>
+    <button class="button">SET LEADER</button>
+    <button class="test-btn">TEST</button>
+    <video controls width="1280" height="720" src="mov.mp4" type="video/mp4"
+    ontimeupdate="print()"></video>
+    <script>
+        function print() {
+            console.log('Print');
+        }
+    </script>
+
+</body>
+
+</html>
