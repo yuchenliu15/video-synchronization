@@ -7,19 +7,24 @@ $(() => {
     const video = document.getElementById('myvideo');
 
     test.click(() => {
-
-        ag.currentTime(20);
-        console.log(ag)
+        socket.emit('test');
     });
+    socket.on('test', () => {
+        ag.requestFullscreen();
+
+    });
+
     button.click(() => { //Set the current page as the leader
         hashid = 1;
         console.log(hashid);
     });
 
+    //For Youtube specifically, preload the video so play immediately after click
     afterglow.on('myvideo', 'ready', function (event) {
         ag.play();
         setTimeout(() => {
             ag.pause();
+
         }, 1000);
 
     });
@@ -48,40 +53,19 @@ $(() => {
         }
     });
 
-    afterglow.on('myvideo', 'fullscreen-entered', (event) => {
-        if (hashid === 1) {
-            socket.emit('enter')
-        }
-    });
-
-    afterglow.on('myvideo', 'fullscreen-left', (event) => {
-        if (hashid === 1) {
-            socket.emit('left')
-        }
-    });
-
     socket.on('play', () => {
         ag.play();
-        console.log('RECEIVED play');
     });
 
     socket.on('pause', () => {
         ag.pause();
     });
 
-    socket.on('enter', () => {
-        ag.requestFullscreen();
-    });
-
-    socket.on('pause', () => {
-        ag.exitFullscreen();
-    });
-
     socket.on('time', (time) => {
         console.log('received' + time)
         const timeDiff = Math.abs(ag.currentTime() - time);
         console.log(timeDiff);
-        if(timeDiff > 1){
+        if (timeDiff > 1) {
             video.currentTime = time;
         }
     });

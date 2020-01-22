@@ -1,3 +1,9 @@
 .vjs-afterglow-skin .vjs-big-play-button:before {
     content: "" !important;
 }
+
+.videowrapper{
+    width: 500px;
+    position:relative;
+    height: auto;
+  }
