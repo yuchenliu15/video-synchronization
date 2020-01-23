@@ -12,6 +12,10 @@ $(() => {
 
     });
 
+    player.on('ready', () => {
+        player.controls(true);
+    });
+
     button.click(() => { //Set the current page as the leader
         hashid = 1;
         console.log(hashid);
