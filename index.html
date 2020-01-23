@@ -6,32 +6,32 @@
     <title>Video player</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-        <script src="//cdn.jsdelivr.net/npm/afterglowplayer@1.x"></script>
+    <link href="//vjs.zencdn.net/5.4.6/video-js.min.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/5.4.6/video.min.js"></script>
 
-    <!-- <script
-        src="https://cdn.jsdelivr.net/gh/moay/afterglow@2d35f1ba15c8271d98ed3390c348b28284222045/dist/afterglow.min.js"></script> -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </script>>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="client.js"></script>
-
 </head>
 
 <body>
+    <script src="client.js"></script>
 
-        <video class="afterglow" id="myvideo" width="1280" height="720" data-youtube-id="ATSgwZXOuUo" 
-        ></video>
-<!--     <video class="afterglow" id="myvideo1" width="1280" height="720" src="mov.mp4">
-        <source type="video/mp4" src="mov.mp4" />
+    <!--     <video id="my-video" class="video-js" controls playsinline muted preload="auto" width="640" height="264"
+        data-setup='{}'>
+        <source src="mov.mp4" type="video/mp4" />
+
+    </video> -->
+
+    <video id="my-video" class="video-js vjs-default-skin" controls playsinline muted width="640" height="264"
+        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=5AiV5j2XpW8"}], "youtube": { "playsinline" : 1} }'>
     </video>
-    <video class="afterglow" id="myvideo1" width="1280" height="720" data-youtube-id="sr2fBCzXo4g" >
-    </video> -->
-<!--     <video class="afterglow" id="myvideo" width="1280" height="720" data-vimeo-id= "17882714" autoplay="autoplay">
-    </video> -->
-    <button class="button">SET LEADER</button>  
+
+    <button class="button">SET LEADER</button>
     <button class="test-btn">TEST</button>
 
-
+    <script src="/node_modules/videojs-youtube/dist/Youtube.min.js"></script> <!-- Only add when youtube needed -->
 </body>
 
 </html>

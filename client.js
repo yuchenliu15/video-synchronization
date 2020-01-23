@@ -1,16 +1,14 @@
 $(() => {
+    const player = videojs('my-video')
     let test = $('.test-btn');
     let button = $('.button');
-    let ag = afterglow.getPlayer('myvideo');
     let hashid = 0;
     let socket = io();
-    const video = document.getElementById('myvideo');
 
     test.click(() => {
-        socket.emit('test');
-    });
+        player.currentTime(5);
+        });
     socket.on('test', () => {
-        ag.requestFullscreen();
 
     });
 
@@ -20,53 +18,40 @@ $(() => {
     });
 
     //For Youtube specifically, preload the video so play immediately after click
-    afterglow.on('myvideo', 'ready', function (event) {
-        ag.play();
-        setTimeout(() => {
-            ag.pause();
-
-        }, 1000);
-
-    });
-
-    video.addEventListener('timeupdate', function () {
-        const time = ag.currentTime();
-        if (hashid === 1)
+    player.on('timeupdate', function (event) {
+        if(hashid === 1) {
+            let time = player.currentTime();
             socket.emit('time', time);
+        }
     });
 
 
-    let isTimeUpdateActivated = 0;
-    afterglow.on('myvideo', 'play', (event) => {
-        if (isTimeUpdateActivated === 0) {
-            video.currentTime = ag.currentTime();
-            isTimeUpdateActivated = 1;
-        }
+    player.on('playing', function (event) {
         if (hashid === 1) {
             socket.emit('play');
         }
     });
 
-    afterglow.on('myvideo', 'paused', (event) => {
+    player.on('pause', (event) => {
         if (hashid === 1) {
             socket.emit('pause')
         }
     });
 
     socket.on('play', () => {
-        ag.play();
+        player.play();
     });
 
     socket.on('pause', () => {
-        ag.pause();
+        player.pause();
     });
 
     socket.on('time', (time) => {
         console.log('received' + time)
-        const timeDiff = Math.abs(ag.currentTime() - time);
+        const timeDiff = Math.abs(player.currentTime() - time);
         console.log(timeDiff);
         if (timeDiff > 1) {
-            video.currentTime = time;
+            player.currentTime(time);
         }
     });
 
