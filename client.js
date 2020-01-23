@@ -1,15 +1,20 @@
+//Need to check if leader is playing, if so, play()
 $(() => {
-    const player = videojs('my-video')
-    let test = $('.test-btn');
+    const player = videojs('my-video');
+    let exitallbutton = $('.exit-btn');
     let button = $('.button');
     let hashid = 0;
     let socket = io();
 
-    test.click(() => {
-        player.currentTime(5);
-        });
-    socket.on('test', () => {
 
+
+    exitallbutton.click(() => {
+        if(hashid === 1)
+            socket.emit('exit');
+    });
+
+    socket.on('test', () => {
+        player.exitFullscreen();
     });
 
     player.on('ready', () => {
@@ -23,12 +28,18 @@ $(() => {
 
     //For Youtube specifically, preload the video so play immediately after click
     player.on('timeupdate', function (event) {
-        if(hashid === 1) {
+        if (hashid === 1) {
             let time = player.currentTime();
             socket.emit('time', time);
         }
     });
 
+    player.on('fullscreenchange', function (event) {
+        const isFullscreen = player.isFullscreen();
+        if (hashid === 1 && isFullscreen === false) {
+           socket.emit('exit');
+        }
+    });
 
     player.on('playing', function (event) {
         if (hashid === 1) {
@@ -62,6 +73,10 @@ $(() => {
     socket.on('hash', msg => {
         hashid = msg; //Each unique hash assigned on connection to the socket.io and server
         console.log(hashid); //The first person signed in is the leader
+    });
+
+    socket.on('exit',() => {
+        player.exitFullscreen();
     });
 
 });
