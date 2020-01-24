@@ -18,15 +18,15 @@ io.on("connection", (socket) => {
     socket.on('play', () => {
         socket.broadcast.emit('play');
     });
+    
     socket.on('pause', () => {
         socket.broadcast.emit('pause');
     });
-    socket.on('test', () => {
-        socket.broadcast.emit('test');
-    });
+
     socket.on('time', (msg) => {
         socket.broadcast.emit('time', msg);
     });
+
     socket.on('exit', () => {
         socket.broadcast.emit('exit', );
     });
