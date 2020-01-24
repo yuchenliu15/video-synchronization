@@ -9,7 +9,7 @@ $(() => {
 
 
     exitallbutton.click(() => {
-        if(hashid === 1)
+        if (hashid === 1)
             socket.emit('exit');
     });
 
@@ -37,8 +37,13 @@ $(() => {
     player.on('fullscreenchange', function (event) {
         const isFullscreen = player.isFullscreen();
         if (hashid === 1 && isFullscreen === false) {
-           socket.emit('exit');
+            socket.emit('exit');
         }
+    });
+
+    player.on('ended', () => {
+        //if (player.isFullscreen()) //sometimes doesn't work for local videos when if statement added
+        player.exitFullscreen();
     });
 
     player.on('playing', function (event) {
@@ -75,7 +80,7 @@ $(() => {
         console.log(hashid); //The first person signed in is the leader
     });
 
-    socket.on('exit',() => {
+    socket.on('exit', () => {
         player.exitFullscreen();
     });
 
